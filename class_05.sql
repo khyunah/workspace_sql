@@ -1,5 +1,3 @@
--- mysql function
-
 -- mysql String function
 select ascii('b');
 select char_length('MY SQL TEST') as 문자길이; -- 필드명 별칭 변경 가능
