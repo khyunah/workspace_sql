@@ -91,4 +91,4 @@ from usertbl
 cross join buytbl
 on usertbl.userName = buytbl.userName
 where usertbl.userName is null
-or buytbl.userName in null;
+or buytbl.userName is null;
