@@ -148,3 +148,24 @@ from employees as e
 inner join titles as t
 on e.emp_no = t.emp_no
 having e.hire_date < '1990-01-01';
+
+
+select * from employees;
+select * from titles;
+select * from salaries;
+
+-- 2. 사원번호, 사원이름, 직급, 현재연봉, 성별, 입사일을 조회하기 ( 단, 연봉이 높은 순으로)
+select e.emp_no, e.last_name, t.title, s.salary, e.gender, e.hire_date
+from employees as e
+left join titles as t 
+on e.emp_no = t.emp_no
+left join salaries as s
+on e.emp_no = s.emp_no
+group by e.emp_no
+order by s.salary desc;
+
+-- 3. 부서번호를 기준으로 부서별 사원이름 출력하기
+
+
+-- 반 학생 문제 
+-- 1. 재직자 중에서 가장 연봉이 높은 10명의 직원이름과 연봉을 출력해주세요
