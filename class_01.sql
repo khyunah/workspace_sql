@@ -1,9 +1,10 @@
--- 
+-- 이 데이터베이스를 사용하겠다.
 use shopdb;
 
 -- 데이터 베이스를 생성하는 구문 
 create database shopdb_1;
 
+-- 만들어진 데이터베이스를 조회
 show databases;
 
 -- 데이터 베이스를 삭제하는 구문
