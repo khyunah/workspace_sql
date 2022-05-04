@@ -97,3 +97,54 @@ from salaries;
 -- 하나하나 확인해보기 
 select max(salary) from salaries;
 select min(salary) from salaries;
+
+-- having절 연습
+-- 연봉을 10번 이상 받은 직원을 출력
+select *, count(emp_no) as '횟수'
+from salaries
+group by emp_no
+having count(emp_no) >= 10
+order by emp_no asc
+limit 30;
+
+-- 문제 
+select * from titles;
+select count(*) from titles;
+
+-- 1. 10만명 이상 사용하고 있는 직함의 이름과 직원의 수를 출력하시오
+select title, count(*) as 직원수
+from titles
+group by title
+having count(title) >= 100000;
+
+-- 2. 5만명 이상 근무하고 있는 부서의 부서번호와 부서소속 사원의 수를 출력하시오 
+select dept_no, count(dept_no) as '소속 사원수'
+from dept_emp
+group by dept_no
+having count(dept_no) >= 50000;
+
+select * from dept_emp;
+-- 3. 현재 근무중인 사람들만 출력
+select *
+from dept_emp
+where to_date = "9999-01-01";
+
+-- 4. 과거에 매니저의 수를 구하시오 ( 그만둔 사람 ) 같지않다 연산자  :  <>
+select * from dept_manager;
+
+select dept_no, count(*) as '과거 매니저 수'
+from dept_manager
+where to_date <> "9999-01-01";
+
+-- 문제 만들기
+-- 그룹함수, 그룹바이, having절 + join 문제 만들기
+
+select * from employees;
+select * from titles;
+
+-- 1. 사원수를 기준으로 하여 사원번호, last_name, 직급, 입사일 조회하기 ( 단, 입사일이 1990년 이하인 사람만 )
+select e.emp_no, e.last_name, t.title, e.hire_date
+from employees as e
+inner join titles as t
+on e.emp_no = t.emp_no
+having e.hire_date < '1990-01-01';
