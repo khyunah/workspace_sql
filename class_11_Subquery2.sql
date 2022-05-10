@@ -137,6 +137,17 @@ select e.emp_no, e.last_name, (select s.salary
                                 group by emp_no) as '연봉'
 from employees as e;
 
+-- 연차를 조회 
+
+select e.*, count(s.emp_no) as 연봉인상횟수
+from employees as e
+inner join salaries as s
+on e.emp_no = s.emp_no
+where e.emp_no in (select emp_no
+					from salaries
+                    where to_date = '9999-01-01')
+group by emp_no;
+
 -- -----------------------------------------------------------
 use employees;
 
@@ -146,6 +157,7 @@ select * from dept_manager; -- 매니저의 입사 퇴사 날짜 직원번호, �
 select * from dept_emp; -- 입사 퇴사 부서번호
 select * from departments; -- 부서번호 부서 이름 
 select * from titles;
+select * from salaries;
 
 -- 1. 
 -- 1-1. 중첩 서브쿼리
@@ -184,3 +196,34 @@ where emp_no in (select emp_no
 
 -- 2-2. 인라인 뷰
 -- d001 부서의 역대 매니저 출력
+select e.*
+from employees as e, (select * 
+						from dept_manager 
+                        where dept_no = 'd001') as d
+where e.emp_no = d.emp_no;
+
+-- 2-3. 스칼라 서브 쿼리
+-- 각 직원들의 최고 연봉을 출력
+select e.*, (select max(salary) 
+				from salaries as s
+                where e.emp_no = s.emp_no
+                group by emp_no) as '최고연봉'
+from employees as e;
+
+-- 3.
+-- 3-1. 중첩
+-- employees 테이블에서 title이 Staff이고 사원번호가 1002인 직원 출력
+select *
+from employees as e
+where e.emp_no = (select emp_no
+				from titles
+                where title = 'Staff'
+                and emp_no = 10002);
+                
+-- 3-2. 인라인 뷰
+-- 직원 테이블에서 퇴사한 직원 출력
+select *
+from employees as e, (select *
+						from dept_emp as d
+                        where d.to_date <> '9999-01-01') as d
+where e.emp_no = d.emp_no;
