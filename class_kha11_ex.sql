@@ -1,104 +1,104 @@
-use employees;
-select * from employees; -- 사번, 생일, 이름, 성별, 고용일
-select * from dept_emp; -- 사번, 부서번호, 입사일, 퇴사일
-select * from dept_manager; -- 역대 매니저 부서번호, 사번, 입사일, 퇴사일
-select * from departments; -- 부서번호, 부서이름
-select * from salaries; -- 사번, 연봉, 연봉언제부터, 연봉언제까지
-select * from titles; -- 사번, 직급, 입사, 퇴사
-desc titles;
+USE employees;
+SELECT * FROM employees; -- 사번, 생일, 이름, 성별, 고용일
+SELECT * FROM dept_emp; -- 사번, 부서번호, 입사일, 퇴사일
+SELECT * FROM dept_manager; -- 역대 매니저 부서번호, 사번, 입사일, 퇴사일
+SELECT * FROM departments; -- 부서번호, 부서이름
+SELECT * FROM salaries; -- 사번, 연봉, 연봉언제부터, 연봉언제까지
+SELECT * FROM titles; -- 사번, 직급, 입사, 퇴사
+DESC titles;
 
 -- 직급별 직원 조회하기 
 -- join 
-select *
-from employees as e
-inner join titles as t
-on e.emp_no = t.emp_no
-where t.title = 'Staff'
-and t.to_date = '9999-01-01';
+SELECT *
+FROM employees AS e
+INNER JOIN titles AS t
+ON e.emp_no = t.emp_no
+WHERE t.title = 'Staff'
+AND t.to_date = '9999-01-01';
 
 -- 서브쿼리 
-select e.*, t.title
-from employees as e, (select * from titles where title = 'Senior Engineer'
-                    and to_date = '9999-01-01') as t
-where e.emp_no = t.emp_no;
+SELECT e.*, t.title
+FROM employees AS e, (SELECT * FROM titles WHERE title = 'Senior Engineer'
+                    AND to_date = '9999-01-01') AS t
+WHERE e.emp_no = t.emp_no;
 
 -- -------------------------------------------------------------------
             
 -- 사원번호로 이름과 직급, 연봉 조회하기 
 -- join
-select e.first_name, e.last_name, t.title, s.salary
-from employees as e
-inner join salaries as s
-on e.emp_no = s.emp_no
-inner join titles as t
-on e.emp_no = t.emp_no
-where e.emp_no = 10007
-and s.to_date = '9999-01-01'
-group by s.emp_no;
+SELECT e.first_name, e.last_name, t.title, s.salary
+FROM employees AS e
+INNER JOIN salaries AS s
+ON e.emp_no = s.emp_no
+INNER JOIN titles AS t
+ON e.emp_no = t.emp_no
+WHERE e.emp_no = 10007
+AND s.to_date = '9999-01-01'
+GROUP BY s.emp_no;
 
 -- 서브쿼리
-select e.emp_no, e.first_name, e.last_name, t.title,
-		(select salary 
-        from salaries as s 
-        where e.emp_no = s.emp_no
-        and to_date = '9999-01-01'
-        group by emp_no) as salary
-from employees as e, (select * 
-						from titles as t 
-                        where t.emp_no = 10007 
-                        and t.to_date = '9999-01-01') as t
-where e.emp_no = t.emp_no;
+SELECT e.emp_no, e.first_name, e.last_name, t.title,
+		(SELECT salary 
+        FROM salaries AS s 
+        WHERE e.emp_no = s.emp_no
+        AND to_date = '9999-01-01'
+        GROUP BY emp_no) AS salary
+FROM employees AS e, (SELECT * 
+						FROM titles AS t 
+                        WHERE t.emp_no = 10007 
+                        AND t.to_date = '9999-01-01') AS t
+WHERE e.emp_no = t.emp_no;
 
 
 -- -------------------------------------------------------------
 
 -- 부서별 직원 조회하기 
 -- join
-select *
-from employees as e
-inner join dept_emp as d
-on e.emp_no = d.emp_no
-where d.dept_no = 'd007';
+SELECT *
+FROM employees AS e
+INNER JOIN dept_emp AS d
+ON e.emp_no = d.emp_no
+WHERE d.dept_no = 'd007';
 
 -- 서브쿼리 
-select *
-from employees as e, (select * 
-						from dept_emp
-                        where dept_no = 'd007') as d
-where e.emp_no = d.emp_no;
+SELECT *
+FROM employees AS e, (SELECT * 
+						FROM dept_emp
+                        WHERE dept_no = 'd007') AS d
+WHERE e.emp_no = d.emp_no;
 
 -- ---------------------------------------------------------------
 
 -- 입사날짜별 직원 조회하기 
 -- join
-select *
-from employees as e
-inner join dept_emp as d
-on e.emp_no = d.emp_no
-where d.from_date > '1995-01-01';
+SELECT *
+FROM employees AS e
+INNER JOIN dept_emp AS d
+ON e.emp_no = d.emp_no
+WHERE d.from_date > '1995-01-01';
 
 -- 서브쿼리 
-select *
-from employees as e, (select *
-						from dept_emp
-                        where from_date > '1985-01-01') as d
-where e.emp_no = d.emp_no;
+SELECT *
+FROM employees AS e, (SELECT *
+						FROM dept_emp
+                        WHERE from_date > '1985-01-01') AS d
+WHERE e.emp_no = d.emp_no;
 
 -- ----------------------------------------------------------------
 
 -- 부서별 현재 매니저 정보 조회하기
 -- join
-select *
-from employees as e
-inner join dept_manager as d
-on e.emp_no = d.emp_no
-where d.dept_no = 'd005'
-and d.to_date = '9999-01-01';
+SELECT *
+FROM employees AS e
+INNER JOIN dept_manager AS d
+ON e.emp_no = d.emp_no
+WHERE d.dept_no = 'd005'
+AND d.to_date = '9999-01-01';
 
 -- 서브쿼리
-select *
-from employees as e
-where e.emp_no in(select emp_no
-					from dept_manager 
-                    where dept_no = 'd004'
-                    and to_date = '9999-01-01');
+SELECT *
+FROM employees AS e
+WHERE e.emp_no IN(SELECT emp_no
+					FROM dept_manager 
+                    WHERE dept_no = 'd004'
+                    AND to_date = '9999-01-01');
