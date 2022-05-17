@@ -6,19 +6,22 @@ DELETE FROM buytbl WHERE userName = '이승기';
 
 USE employees;
 
-create table test11(
-	name varchar(10) not null,
-    age int,
-    address varchar(10)
+CREATE TABLE test11(
+	name VARCHAR(10) NOT NULL,
+    age INT,
+    address VARCHAR(10)
 );
 
-alter table test11 add gender enum('M','F');
-alter table test11 add birth_year int;
+ALTER TABLE test11 ADD gender ENUM('M','F');
+ALTER TABLE test11 ADD birth_year INT;
 
-select * from test11;
-desc test11;
+SELECT * FROM test11;
+DESC test11;
 
-update test11 set name = '김길동', age = 22 where name = '김현아';
+UPDATE test11 SET name = '홍길동', age = 22 WHERE name = '김김김';
+DELETE FROM test11 WHERE name = '홍길동';
+
+select * from test11 where name = '김현아' and age = 5;
 
 -- --------------------------------------------------
 SELECT * FROM employees; -- 사번, 생일, 이름, 성별, 고용일
