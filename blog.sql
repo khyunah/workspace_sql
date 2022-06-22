@@ -5,6 +5,9 @@ select * from board;
 desc board;
 select * from reply;
 select * from student;
+create database blog3;
+desc board;
+select * from board;
 
     create table User (
        id integer not null auto_increment,
