@@ -4,6 +4,16 @@ desc user;
 select * from board;
 desc board;
 select * from reply;
+desc reply;
+delete from board where id =1;
+insert into reply(content, boardId, userId, createDate) values ("댓글 1번 글", 2, 1, now());
+insert into reply(content, boardId, userId, createDate) values ("댓글 2번 글", 2, 1, now());
+insert into reply(content, boardId, userId, createDate) values ("댓글 3번 글", 2, 1, now());
+insert into reply(content, boardId, userId, createDate) values ("댓글 4번 글", 2, 1, now());
+insert into reply(content, boardId, userId, createDate) values ("댓글 5번 글", 2, 1, now());
+
+
+
 select * from student;
 create database blog3;
 desc board;
