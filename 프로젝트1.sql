@@ -14,7 +14,7 @@ desc user;
 desc communityLike;
 update communityBoard set likeCount = 23 where id = 19;
 update user set username = "abc" where id = 8;
-DELETE FROM item WHERE id = 1;
+DELETE FROM user WHERE id = 4;
 alter table item drop color;
 SELECT * FROM basket WHERE userid = 10;
 -- 쿼리문으로 데이터 입력할때 자동으로 시간 들어갈 수 있게 
