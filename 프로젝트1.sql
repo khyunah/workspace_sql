@@ -11,10 +11,11 @@ select * from reply;
 desc reply;
 desc communityBoard;
 desc user;
-desc basket;
+desc communityLike;
 update communityBoard set likeCount = 23 where id = 19;
-update user set role = "ADMIN" where id = 1;
-DELETE FROM basket WHERE userid = 10;
+update user set username = "abc" where id = 8;
+DELETE FROM item WHERE id = 1;
+alter table item drop color;
 SELECT * FROM basket WHERE userid = 10;
 -- 쿼리문으로 데이터 입력할때 자동으로 시간 들어갈 수 있게 
 alter table communityBoard modify createDate datetime default CURRENT_TIMESTAMP;
