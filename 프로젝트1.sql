@@ -16,15 +16,46 @@ UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
 UPDATE user SET username = "abc" WHERE id = 8;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
 UPDATE user SET createDate = TIMESTAMP('20220731', '16:00:00') WHERE id = 3;
-DELETE FROM item WHERE id = 1;
+DELETE FROM user WHERE id = 11;
 
+# 오늘 가입한 유저 정보
+SELECT *
+FROM user
+WHERE DAYOFYEAR(createDate) = DAYOFYEAR(now());
+
+
+# 이번주 가입자 수
 SELECT DATE(a.createDate) AS joinDate,COUNT(createDate) AS joinCount
 FROM user AS a
-WHERE DAYOFYEAR(createDate) BETWEEN DAYOFYEAR(NOW()) -7 AND DAYOFYEAR(NOW())
+WHERE DAYOFYEAR(createDate) BETWEEN DAYOFYEAR(NOW()) -6 AND DAYOFYEAR(NOW())
 GROUP BY DAYOFYEAR(createDate)
 ORDER BY joinDate;
 
-ALTER TABLE item DROP color;
+# 오늘 가입자 수 
+SELECT DATE(a.createDate) AS joinDate,COUNT(createDate) AS joinCount
+FROM user AS a
+WHERE DAYOFYEAR(createDate) = DAYOFYEAR(NOW())
+GROUP BY DAYOFYEAR(createDate);
+
+# 총 가입자 수 
+SELECT DATE(a.createDate) AS joinDate, COUNT(createDate) AS joinCount
+FROM user AS a;
+
+# 이번주 총 가입자 수
+SELECT DATE(a.createDate) AS joinDate,COUNT(createDate) AS joinCount
+FROM user AS a
+WHERE DAYOFYEAR(createDate) BETWEEN DAYOFYEAR(NOW()) -6 AND DAYOFYEAR(NOW());
+
+# oauth 별 총 가입자 수 
+SELECT oauth, COUNT(*) AS count
+FROM user
+GROUP BY oauth;
+
+# oauth 별 오늘 가입자 수 
+SELECT oauth, COUNT(*) AS count
+FROM user
+WHERE DAYOFYEAR(createDate) = DAYOFYEAR(NOW())
+GROUP BY oauth;
 
 SELECT * FROM basket WHERE userid = 10;
 -- 쿼리문으로 데이터 입력할때 자동으로 시간 들어갈 수 있게 
