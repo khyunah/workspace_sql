@@ -25,6 +25,7 @@ GROUP BY DAYOFYEAR(createDate)
 ORDER BY joinDate;
 
 ALTER TABLE item DROP color;
+
 SELECT * FROM basket WHERE userid = 10;
 -- 쿼리문으로 데이터 입력할때 자동으로 시간 들어갈 수 있게 
 ALTER TABLE communityBoard MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
