@@ -18,6 +18,10 @@ DESC communityLike;
 DESC reply;
 DESC purchasehistory;
 
+-- 쿼리문으로 데이터 입력할때 자동으로 시간 들어갈 수 있게 
+ALTER TABLE communityBoard MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE user MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
+
 UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
 UPDATE user SET username = "abc" WHERE id = 8;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
@@ -26,7 +30,7 @@ DELETE FROM user WHERE id = 11;
 DROP TABLE purchasehistory;
 
 # 금주 판매 금액, 판매량
-SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalAmount, SUM(a.count) AS totalCount
+SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
 FROM purchasehistory AS a
 INNER JOIN item AS b
 ON a.itemId = b.id
@@ -35,10 +39,20 @@ GROUP BY DATE(a.createDate)
 ORDER BY salesDate;
 
 # 총 판매 금액, 판매량
-SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalAmount, SUM(a.count) AS totalCount
+SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
 FROM purchasehistory AS a
 INNER JOIN item AS b
 ON a.itemId = b.id;
+
+# 오늘 아이템별 판매 수량
+SELECT b.name, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
+FROM purchasehistory AS a
+INNER JOIN item AS b
+ON a.itemId = b.id
+WHERE DAYOFYEAR(a.createDate) BETWEEN DAYOFYEAR(NOW()) -6 AND DAYOFYEAR(NOW())
+GROUP BY b.name
+ORDER BY totalIncome DESC
+LIMIT 5;
 
 # 오늘 가입한 유저 정보
 SELECT *
@@ -78,32 +92,35 @@ FROM user
 WHERE DAYOFYEAR(createDate) = DAYOFYEAR(NOW())
 GROUP BY oauth;
 
-SELECT * FROM basket WHERE userid = 10;
--- 쿼리문으로 데이터 입력할때 자동으로 시간 들어갈 수 있게 
-ALTER TABLE communityBoard MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE user MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
-
 # 구매내역 샘플 데이터 
-INSERT INTO purchasehistory VALUES(1, 1, NOW(), 1, 2);
-INSERT INTO purchasehistory VALUES(2, 1, TIMESTAMP('20220802', '16:00:00'), 1, 3);
-INSERT INTO purchasehistory VALUES(3, 1, TIMESTAMP('20220803', '16:00:00'), 1, 4);
-INSERT INTO purchasehistory VALUES(4, 1, TIMESTAMP('20220804', '12:00:00'), 2, 5);
+INSERT INTO purchasehistory VALUES(1, 1, NOW(), 2, 2);
+INSERT INTO purchasehistory VALUES(2, 1, TIMESTAMP('20220802', '16:00:00'), 24, 3);
+INSERT INTO purchasehistory VALUES(3, 1, TIMESTAMP('20220803', '16:00:00'), 2, 2);
+INSERT INTO purchasehistory VALUES(4, 1, TIMESTAMP('20220804', '12:00:00'), 2, 12);
 INSERT INTO purchasehistory VALUES(5, 1, TIMESTAMP('20220731', '16:00:00'), 2, 6);
 INSERT INTO purchasehistory VALUES(6, 1, TIMESTAMP('20220802', '16:00:00'), 2, 7);
 INSERT INTO purchasehistory VALUES(7, 1, TIMESTAMP('20220801', '16:00:00'), 3, 3);
-INSERT INTO purchasehistory VALUES(8, 1, TIMESTAMP('20220801', '16:00:00'), 4, 5);
+INSERT INTO purchasehistory VALUES(8, 1, TIMESTAMP('20220801', '16:00:00'), 4, 12);
 INSERT INTO purchasehistory VALUES(9, 1, TIMESTAMP('20220729', '16:00:00'), 4, 6);
 INSERT INTO purchasehistory VALUES(10, 1, TIMESTAMP('20220803', '16:00:00'), 5, 7);
 INSERT INTO purchasehistory VALUES(11, 1, TIMESTAMP('20220728', '16:00:00'), 5, 3);
-INSERT INTO purchasehistory VALUES(12, 1, TIMESTAMP('20220804', '16:00:00'), 6, 4);
-INSERT INTO purchasehistory VALUES(13, 1, TIMESTAMP('20220804', '16:00:00'), 6, 5);
+INSERT INTO purchasehistory VALUES(12, 1, TIMESTAMP('20220804', '16:00:00'), 6, 9);
+INSERT INTO purchasehistory VALUES(13, 1, TIMESTAMP('20220804', '16:00:00'), 6, 9);
 INSERT INTO purchasehistory VALUES(14, 1, TIMESTAMP('20220801', '16:00:00'), 7, 2);
-INSERT INTO purchasehistory VALUES(15, 1, TIMESTAMP('20220801', '16:00:00'), 7, 4);
+INSERT INTO purchasehistory VALUES(15, 1, TIMESTAMP('20220801', '16:00:00'), 7, 12);
 INSERT INTO purchasehistory VALUES(16, 1, TIMESTAMP('20220730', '16:00:00'), 7, 6);
-INSERT INTO purchasehistory VALUES(17, 1, TIMESTAMP('20220730', '16:00:00'), 7, 5);
+INSERT INTO purchasehistory VALUES(17, 1, TIMESTAMP('20220730', '16:00:00'), 7, 12);
 INSERT INTO purchasehistory VALUES(18, 1, TIMESTAMP('20220730', '16:00:00'), 8, 2);
-INSERT INTO purchasehistory VALUES(19, 1, TIMESTAMP('20220731', '16:00:00'), 8, 5);
+INSERT INTO purchasehistory VALUES(19, 1, TIMESTAMP('20220731', '16:00:00'), 8, 7);
 INSERT INTO purchasehistory VALUES(20, 1, TIMESTAMP('20220803', '16:00:00'), 9, 3);
+INSERT INTO purchasehistory VALUES(21, 1, now(), 9, 3);
+INSERT INTO purchasehistory VALUES(22, 1, now(), 9, 3);
+INSERT INTO purchasehistory VALUES(23, 1, now(), 24, 3);
+INSERT INTO purchasehistory VALUES(24, 1, now(), 8, 3);
+INSERT INTO purchasehistory VALUES(25, 1, now(), 7, 3);
+INSERT INTO purchasehistory VALUES(26, 1, now(), 6, 3);
+INSERT INTO purchasehistory VALUES(27, 1, now(), 5, 3);
+
 
 # 상품 샘플 데이터
 INSERT INTO item VALUES(1,1,'SHIRTS', '2020 S/S Season Limited adition','MAN','https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2022%2F06%2Fmilan-fashion-week-mens-spring-summer-2023-street-style-2.jpg?q=75&w=750&cbr=1&fit=max','PRADA SHIRTS',2300,'L'); 
