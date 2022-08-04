@@ -8,21 +8,42 @@ SELECT * FROM item;
 SELECT * FROM communityBoard;
 SELECT * FROM communityLike;
 SELECT * FROM reply;
-DESC reply;
-DESC communityBoard;
+SELECT * FROM purchasehistory;
+
 DESC user;
+DESC basket;
+DESC item;
+DESC communityBoard;
 DESC communityLike;
+DESC reply;
+DESC purchasehistory;
+
 UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
 UPDATE user SET username = "abc" WHERE id = 8;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
-UPDATE user SET createDate = TIMESTAMP('20220731', '16:00:00') WHERE id = 3;
+UPDATE user SET createDate = TIMESTAMP('20220802', '16:00:00') WHERE id = 7;
 DELETE FROM user WHERE id = 11;
+DROP TABLE purchasehistory;
+
+# 금주 판매 금액, 판매량
+SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalAmount, SUM(a.count) AS totalCount
+FROM purchasehistory AS a
+INNER JOIN item AS b
+ON a.itemId = b.id
+WHERE DAYOFYEAR(a.createDate) BETWEEN DAYOFYEAR(NOW()) -6 AND DAYOFYEAR(NOW())
+GROUP BY DATE(a.createDate)
+ORDER BY salesDate;
+
+# 총 판매 금액, 판매량
+SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalAmount, SUM(a.count) AS totalCount
+FROM purchasehistory AS a
+INNER JOIN item AS b
+ON a.itemId = b.id;
 
 # 오늘 가입한 유저 정보
 SELECT *
 FROM user
-WHERE DAYOFYEAR(createDate) = DAYOFYEAR(now());
-
+WHERE DAYOFYEAR(createDate) = DAYOFYEAR(NOW());
 
 # 이번주 가입자 수
 SELECT DATE(a.createDate) AS joinDate,COUNT(createDate) AS joinCount
@@ -62,14 +83,29 @@ SELECT * FROM basket WHERE userid = 10;
 ALTER TABLE communityBoard MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE user MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
 
--- communityBoard
-INSERT INTO communityBoard (content, imageUrl, itemLink, originImageTitle, reaction, likeCount, title, userId)
-VALUES('본문9', '이미지주소', '아이템주소', '이미지 원본 이름', 0, 0, '제목9', 1);
-INSERT INTO communityBoard (content, imageUrl, itemLink, originImageTitle, reaction, likeCount, title, userId)
-VALUES('본문10', '이미지주소2', '아이템주소2', '이미지 원본 이름2', 0, 0, '제목10', 1);
+# 구매내역 샘플 데이터 
+INSERT INTO purchasehistory VALUES(1, 1, NOW(), 1, 2);
+INSERT INTO purchasehistory VALUES(2, 1, TIMESTAMP('20220802', '16:00:00'), 1, 3);
+INSERT INTO purchasehistory VALUES(3, 1, TIMESTAMP('20220803', '16:00:00'), 1, 4);
+INSERT INTO purchasehistory VALUES(4, 1, TIMESTAMP('20220804', '12:00:00'), 2, 5);
+INSERT INTO purchasehistory VALUES(5, 1, TIMESTAMP('20220731', '16:00:00'), 2, 6);
+INSERT INTO purchasehistory VALUES(6, 1, TIMESTAMP('20220802', '16:00:00'), 2, 7);
+INSERT INTO purchasehistory VALUES(7, 1, TIMESTAMP('20220801', '16:00:00'), 3, 3);
+INSERT INTO purchasehistory VALUES(8, 1, TIMESTAMP('20220801', '16:00:00'), 4, 5);
+INSERT INTO purchasehistory VALUES(9, 1, TIMESTAMP('20220729', '16:00:00'), 4, 6);
+INSERT INTO purchasehistory VALUES(10, 1, TIMESTAMP('20220803', '16:00:00'), 5, 7);
+INSERT INTO purchasehistory VALUES(11, 1, TIMESTAMP('20220728', '16:00:00'), 5, 3);
+INSERT INTO purchasehistory VALUES(12, 1, TIMESTAMP('20220804', '16:00:00'), 6, 4);
+INSERT INTO purchasehistory VALUES(13, 1, TIMESTAMP('20220804', '16:00:00'), 6, 5);
+INSERT INTO purchasehistory VALUES(14, 1, TIMESTAMP('20220801', '16:00:00'), 7, 2);
+INSERT INTO purchasehistory VALUES(15, 1, TIMESTAMP('20220801', '16:00:00'), 7, 4);
+INSERT INTO purchasehistory VALUES(16, 1, TIMESTAMP('20220730', '16:00:00'), 7, 6);
+INSERT INTO purchasehistory VALUES(17, 1, TIMESTAMP('20220730', '16:00:00'), 7, 5);
+INSERT INTO purchasehistory VALUES(18, 1, TIMESTAMP('20220730', '16:00:00'), 8, 2);
+INSERT INTO purchasehistory VALUES(19, 1, TIMESTAMP('20220731', '16:00:00'), 8, 5);
+INSERT INTO purchasehistory VALUES(20, 1, TIMESTAMP('20220803', '16:00:00'), 9, 3);
 
-DROP TABLE item;
-
+# 상품 샘플 데이터
 INSERT INTO item VALUES(1,1,'SHIRTS', '2020 S/S Season Limited adition','MAN','https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2022%2F06%2Fmilan-fashion-week-mens-spring-summer-2023-street-style-2.jpg?q=75&w=750&cbr=1&fit=max','PRADA SHIRTS',2300,'L'); 
 INSERT INTO item VALUES(2,1,'PANTS', '2020 S/S Season Limited adition','MAN','https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2022%2F06%2FAMBUSH%C2%AE-Resort-SpringSummer-2023-Collection-5.jpg?q=90&w=1400&cbr=1&fit=max','DoCkho PANTS',2100,'M'); 
 INSERT INTO item VALUES(3,1,'ACCESSORY', '2020 S/S Season Limited adition','MAN','https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2022%2F06%2Flondon-fashion-week-2023-spring-summer-street-style-snaps-8.jpg?q=90&w=1400&cbr=1&fit=max','GUCCI ADIDAS CAP',3500,'M'); 
