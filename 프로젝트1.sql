@@ -25,7 +25,7 @@ ALTER TABLE user MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
 UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
 UPDATE user SET username = "abc" WHERE id = 8;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
-UPDATE user SET createDate = TIMESTAMP('20220802', '16:00:00') WHERE id = 7;
+UPDATE user SET createDate = TIMESTAMP('20220720', '16:00:00') WHERE id = 3;
 DELETE FROM user WHERE id = 11;
 DROP TABLE purchasehistory;
 
@@ -44,7 +44,7 @@ FROM purchasehistory AS a
 INNER JOIN item AS b
 ON a.itemId = b.id;
 
-# 오늘 아이템별 판매 수량
+# 금주 아이템별 판매 수량
 SELECT b.name, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
 FROM purchasehistory AS a
 INNER JOIN item AS b
@@ -53,6 +53,27 @@ WHERE DAYOFYEAR(a.createDate) BETWEEN DAYOFYEAR(NOW()) -6 AND DAYOFYEAR(NOW())
 GROUP BY b.name
 ORDER BY totalIncome DESC
 LIMIT 5;
+
+# 이번달 많이 구매한 top5 유저 
+SELECT c.username, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
+FROM purchasehistory AS a
+INNER JOIN item AS b
+ON a.itemId = b.id
+INNER JOIN user AS c
+ON a.userId = c.id
+WHERE MONTH(a.createDate) = MONTH(NOW())
+GROUP BY a.userId
+ORDER BY totalIncome DESC
+LIMIT 5;
+
+# 이번달 카테고리별 판매 금액, 판매 건수 
+SELECT b.category, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
+FROM purchasehistory AS a
+INNER JOIN item AS b
+ON a.itemId = b.id
+WHERE MONTH(a.createDate) = MONTH(NOW())
+GROUP BY b.category
+ORDER BY totalIncome DESC;
 
 # 오늘 가입한 유저 정보
 SELECT *
@@ -113,13 +134,15 @@ INSERT INTO purchasehistory VALUES(17, 1, TIMESTAMP('20220730', '16:00:00'), 7, 
 INSERT INTO purchasehistory VALUES(18, 1, TIMESTAMP('20220730', '16:00:00'), 8, 2);
 INSERT INTO purchasehistory VALUES(19, 1, TIMESTAMP('20220731', '16:00:00'), 8, 7);
 INSERT INTO purchasehistory VALUES(20, 1, TIMESTAMP('20220803', '16:00:00'), 9, 3);
-INSERT INTO purchasehistory VALUES(21, 1, now(), 9, 3);
-INSERT INTO purchasehistory VALUES(22, 1, now(), 9, 3);
-INSERT INTO purchasehistory VALUES(23, 1, now(), 24, 3);
-INSERT INTO purchasehistory VALUES(24, 1, now(), 8, 3);
-INSERT INTO purchasehistory VALUES(25, 1, now(), 7, 3);
-INSERT INTO purchasehistory VALUES(26, 1, now(), 6, 3);
-INSERT INTO purchasehistory VALUES(27, 1, now(), 5, 3);
+INSERT INTO purchasehistory VALUES(21, 1, NOW(), 9, 3);
+INSERT INTO purchasehistory VALUES(22, 1, NOW(), 9, 3);
+INSERT INTO purchasehistory VALUES(23, 1, NOW(), 24, 3);
+INSERT INTO purchasehistory VALUES(24, 1, NOW(), 8, 3);
+INSERT INTO purchasehistory VALUES(25, 1, NOW(), 7, 3);
+INSERT INTO purchasehistory VALUES(26, 1, NOW(), 6, 3);
+INSERT INTO purchasehistory VALUES(27, 1, NOW(), 5, 3);
+INSERT INTO purchasehistory VALUES(28, 1, NOW(), 12, 3);
+INSERT INTO purchasehistory VALUES(29, 1, NOW(), 13, 3);
 
 
 # 상품 샘플 데이터
