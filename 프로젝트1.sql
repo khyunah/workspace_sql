@@ -23,11 +23,53 @@ ALTER TABLE communityBoard MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE user MODIFY createDate DATETIME DEFAULT CURRENT_TIMESTAMP;
 
 UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
-UPDATE user SET username = "abc" WHERE id = 8;
+UPDATE user SET username = "aaaaaa@nate.coma_2317239864" WHERE id = 3;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
 UPDATE user SET createDate = TIMESTAMP('20220720', '16:00:00') WHERE id = 3;
 DELETE FROM user WHERE id = 11;
 DROP TABLE purchasehistory;
+
+# 이번주 좋아요 top5
+SELECT b.id, b.title, c.username, COUNT(a.boardId) AS likeCount
+FROM communityLike AS a
+INNER JOIN communityBoard AS b
+ON a.boardId = b.id
+INNER JOIN user AS c
+ON b.userId = c.id
+GROUP BY a.boardId
+ORDER BY likeCount DESC
+LIMIT 5;
+
+# 이번주 댓글 top5
+SELECT b.id, b.title, c.username, COUNT(a.boardId) AS count
+FROM reply AS a
+INNER JOIN communityBoard AS b
+ON a.boardId = b.id
+INNER JOIN user AS c
+ON b.userId = c.id
+GROUP BY a.boardId
+ORDER BY count DESC
+LIMIT 5;
+
+# 한달 게시글 수
+SELECT day(createDate) AS date, COUNT(createDate) AS count
+FROM communityBoard
+WHERE MONTH(createDate) = MONTH(NOW())
+GROUP BY DAYOFYEAR(createDate);
+
+# 총 게시글 수
+SELECT DATE(createDate) AS date, COUNT(*) AS count
+FROM communityBoard;
+
+# 오늘 게시글 수 
+SELECT DATE(createDate) AS date, COUNT(*) AS count
+FROM communityBoard
+WHERE DAY(createDate) = DAY(NOW());
+
+# 이번주 게시글 수
+SELECT DATE(createDate) AS date, COUNT(*) AS count
+FROM communityBoard
+WHERE WEEK(createDate) = WEEK(NOW());
 
 # 금주 판매 금액, 판매량
 SELECT DATE(a.createDate) AS salesDate, SUM(b.price) AS totalIncome, SUM(a.count) AS totalCount
