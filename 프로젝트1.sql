@@ -29,6 +29,18 @@ UPDATE user SET createDate = TIMESTAMP('20220720', '16:00:00') WHERE id = 3;
 DELETE FROM user WHERE id = 11;
 DROP TABLE purchasehistory;
 
+# 해당 보드의 댓글 갯수
+SELECT a.boardId AS id, COUNT(a.boardId) AS count
+FROM reply AS a
+GROUP BY boardId;
+
+# 좋아요 리스트
+SELECT b.imageUrl, b.username, b.name, b.id
+FROM communityLike AS a
+INNER JOIN user AS b
+ON a.userId = b.id
+WHERE a.boardId = 16;
+
 # 이번주 좋아요 top5
 SELECT b.id, b.title, c.username, COUNT(a.boardId) AS likeCount
 FROM communityLike AS a
@@ -52,7 +64,7 @@ ORDER BY count DESC
 LIMIT 5;
 
 # 한달 게시글 수
-SELECT day(createDate) AS date, COUNT(createDate) AS count
+SELECT DAY(createDate) AS date, COUNT(createDate) AS count
 FROM communityBoard
 WHERE MONTH(createDate) = MONTH(NOW())
 GROUP BY DAYOFYEAR(createDate);
