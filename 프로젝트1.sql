@@ -26,8 +26,15 @@ UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
 UPDATE user SET username = "aaaaaa@nate.coma_2317239864" WHERE id = 3;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
 UPDATE user SET createDate = TIMESTAMP('20220720', '16:00:00') WHERE id = 3;
+UPDATE item SET amount = 0 WHERE id = 1;
 DELETE FROM user WHERE id = 11;
 DROP TABLE purchasehistory;
+
+# 재고 확인 
+SELECT amount FROM item WHERE id = 1;
+
+# 장바구니 아이템별 갯수
+SELECT item_id, count FROM basket WHERE userId = 1;
 
 # 이번주 좋아요 top5
 SELECT b.id, b.title, c.username, COUNT(a.boardId) AS likeCount
@@ -52,7 +59,7 @@ ORDER BY count DESC
 LIMIT 5;
 
 # 한달 게시글 수
-SELECT day(createDate) AS date, COUNT(createDate) AS count
+SELECT DAY(createDate) AS date, COUNT(createDate) AS count
 FROM communityBoard
 WHERE MONTH(createDate) = MONTH(NOW())
 GROUP BY DAYOFYEAR(createDate);
