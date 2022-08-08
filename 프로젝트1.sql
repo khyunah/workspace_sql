@@ -36,6 +36,18 @@ SELECT amount FROM item WHERE id = 1;
 # 장바구니 아이템별 갯수
 SELECT item_id, count FROM basket WHERE userId = 1;
 
+# 해당 보드의 댓글 갯수
+SELECT a.boardId AS id, COUNT(a.boardId) AS count
+FROM reply AS a
+GROUP BY boardId;
+
+# 좋아요 리스트
+SELECT b.imageUrl, b.username, b.name, b.id
+FROM communityLike AS a
+INNER JOIN user AS b
+ON a.userId = b.id
+WHERE a.boardId = 16;
+
 # 이번주 좋아요 top5
 SELECT b.id, b.title, c.username, COUNT(a.boardId) AS likeCount
 FROM communityLike AS a
