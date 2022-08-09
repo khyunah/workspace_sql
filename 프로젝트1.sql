@@ -26,9 +26,16 @@ UPDATE communityBoard SET likeCount = 23 WHERE id = 19;
 UPDATE user SET username = "aaaaaa@nate.coma_2317239864" WHERE id = 3;
 UPDATE user SET role = "ADMIN" WHERE id = 1;
 UPDATE user SET createDate = TIMESTAMP('20220720', '16:00:00') WHERE id = 3;
-UPDATE item SET amount = 0 WHERE id = 1;
+UPDATE item SET amount = 20;
 DELETE FROM user WHERE id = 11;
 DROP TABLE purchasehistory;
+
+# 히스토리 아이디가 제일 높은순으로 들고 와서 날짜 뽑기 
+SELECT *
+FROM purchasehistory
+WHERE userId = 1 
+ORDER BY id DESC
+LIMIT 1;
 
 # 재고 확인 
 SELECT amount FROM item WHERE id = 1;
