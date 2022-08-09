@@ -9,6 +9,8 @@ SELECT * FROM communityBoard;
 SELECT * FROM communityLike;
 SELECT * FROM reply;
 SELECT * FROM purchasehistory;
+SELECT * FROM menu;
+SELECT * FROM subMenu;
 
 DESC user;
 DESC basket;
