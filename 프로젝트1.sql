@@ -185,36 +185,93 @@ FROM user
 WHERE DAYOFYEAR(createDate) = DAYOFYEAR(NOW())
 GROUP BY oauth;
 
+
+
+# reply 샘플 데이터
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 26, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 25, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 24, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 23, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 22, 2);
+
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 21, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 20, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 19, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 18, 2);
+insert into reply(content, createDate, boardId, userId) values('멋있어요', now(), 17, 2);
+
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 26, 3);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 25, 4);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 24, 4);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 23, 5);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 22, 3);
+
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 21, 6);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 20, 7);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 19, 8);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 18, 12);
+insert into reply(content, createDate, boardId, userId) values('분위기가 좋아요 ! !', now(), 17, 13);
+
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 26, 6);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 25, 3);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 24, 7);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 23, 8);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 22, 9);
+
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 21, 2);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 20, 3);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 19, 4);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 18, 5);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 17, 6);
+
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 26, 13);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 26, 3);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 26, 14);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 26, 15);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 26, 5);
+
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 25, 5);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 25, 3);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 15, 4);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 14, 5);
+insert into reply(content, createDate, boardId, userId) values('like it ~ ', now(), 14, 6);
+
 # 좋아요 샘플 데이터 
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 1);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 2);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 3);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 4);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 5);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 1);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 2);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 3);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 4);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 5);
 
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 6);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 7);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 8);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 9);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 10);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 6);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 7);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 8);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 9);
+INSERT into communityLike(isLike, boardId, userId) values(1, 26, 10);
 
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 11);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 12);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 13);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 14);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 15);
+INSERT into communityLike(isLike, boardId, userId) values(1, 25, 11);
+INSERT into communityLike(isLike, boardId, userId) values(1, 25, 12);
+INSERT into communityLike(isLike, boardId, userId) values(1, 25, 13);
+INSERT into communityLike(isLike, boardId, userId) values(1, 25, 14);
+INSERT into communityLike(isLike, boardId, userId) values(1, 25, 15);
 
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 16);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 17);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 18);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 19);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 20);
+INSERT into communityLike(isLike, boardId, userId) values(1, 25, 16);
+INSERT into communityLike(isLike, boardId, userId) values(1, 9, 17);
+INSERT into communityLike(isLike, boardId, userId) values(1, 9, 18);
+INSERT into communityLike(isLike, boardId, userId) values(1, 9, 19);
+INSERT into communityLike(isLike, boardId, userId) values(1, 9, 20);
 
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 21);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 22);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 23);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 24);
-INSERT into communityLike(isLike, boardId, userId) values(1, 1, 25);
+INSERT into communityLike(isLike, boardId, userId) values(1, 9, 21);
+INSERT into communityLike(isLike, boardId, userId) values(1, 12, 22);
+INSERT into communityLike(isLike, boardId, userId) values(1, 12, 23);
+INSERT into communityLike(isLike, boardId, userId) values(1, 12, 24);
+INSERT into communityLike(isLike, boardId, userId) values(1, 12, 25);
+
+INSERT into communityLike(isLike, boardId, userId) values(1, 9, 21);
+INSERT into communityLike(isLike, boardId, userId) values(1, 5, 22);
+INSERT into communityLike(isLike, boardId, userId) values(1, 6, 23);
+INSERT into communityLike(isLike, boardId, userId) values(1, 6, 24);
+INSERT into communityLike(isLike, boardId, userId) values(1, 17, 25);
 
 # 커뮤니티 보드 샘플데이터 26개
 insert into communityBoard(content, createDate, imageUrl, originImageTitle, title, userId) 
